@@ -178,6 +178,12 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
         </button>
 
+        <!-- Hard Reset Button in Top Header -->
+        <button id="headerResetBtn" onclick="openResetModal()" title="Hard Reset: Reset scores to 0 (Shortcut: R)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-rose-500/40 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 hover:text-white text-xs font-semibold transition shadow-sm group">
+          <svg class="w-4 h-4 text-rose-400 group-hover:-rotate-90 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span class="hidden md:inline">Hard Reset</span>
+        </button>
+
         <!-- Dark / Light Theme Toggle Button -->
         <button id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Theme (Shortcut: T)" class="p-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-amber-400 transition hover:rotate-12 duration-300">
           <svg id="themeMoonIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -195,15 +201,19 @@
     <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
       <!-- Mode Tabs -->
       <div class="inline-flex p-1 rounded-2xl bg-slate-900 border border-slate-800 text-xs font-semibold shadow-inner">
-        <button id="modeMcqBtn" onclick="switchMode('mcq')" class="px-4 py-2 rounded-xl transition flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md">
+        <button id="modeAllBtn" onclick="switchMode('all')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md font-bold">
+          <span>📚</span>
+          <span>All (<span id="allModeCount">174</span>)</span>
+        </button>
+        <button id="modeMcqBtn" onclick="switchMode('mcq')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200 font-semibold">
           <span>🎴</span>
-          <span>Flashcard MCQ</span>
+          <span>Flashcard MCQ (<span id="mcqModeCount">112</span>)</span>
         </button>
-        <button id="modeDragBtn" onclick="switchMode('drag-drop')" class="px-4 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+        <button id="modeDragBtn" onclick="switchMode('drag-drop')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200 font-semibold">
           <span>🧩</span>
-          <span>Drag & Drop Blanks</span>
+          <span>Drag & Drop (<span id="dragModeCount">62</span>)</span>
         </button>
-        <button id="modeStarredBtn" onclick="toggleStarredOnly()" class="px-4 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+        <button id="modeStarredBtn" onclick="toggleStarredOnly()" class="px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200 font-semibold">
           <span id="starModeIcon">⭐</span>
           <span>Starred (<span id="starredCountBadge">0</span>)</span>
         </button>
@@ -225,6 +235,11 @@
         <button id="shuffleBtn" onclick="shuffleQuestions()" title="Shuffle questions" class="px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 transition flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
           <span class="hidden sm:inline">Shuffle</span>
+        </button>
+        <!-- Hard Reset Quick Button -->
+        <button id="subResetBtn" onclick="openResetModal()" title="Hard Reset: Clear scores & start from zero (Shortcut: R)" class="px-3 py-1.5 rounded-xl border border-rose-500/40 bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 hover:text-white transition flex items-center gap-1.5 font-semibold shadow-sm">
+          <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Hard Reset</span>
         </button>
       </div>
     </div>
@@ -347,6 +362,12 @@
               <!-- Bookmark Star -->
               <button onclick="toggleStarCurrent()" id="frontStarBtn" title="Star this question to review later" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 transition hover:text-amber-400">
                 <svg id="starSvgIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+              </button>
+
+              <!-- Retry Current Question (Clear Answer) -->
+              <button onclick="retryCurrentQuestion()" id="mcqRetryBtn" title="Clear your answer on this question to try again" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-semibold transition border border-slate-700">
+                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Retry</span>
               </button>
 
               <!-- Flip Card Button -->
@@ -646,6 +667,17 @@
       <div id="gridModalContent" class="p-5 overflow-y-auto grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2 text-xs font-mono font-bold">
         <!-- Dynamically rendered question chips -->
       </div>
+
+      <!-- Grid Modal Footer -->
+      <div class="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between">
+        <button onclick="openResetModal(); closeGridModal();" class="text-xs text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+          <span>Hard Reset to 0</span>
+        </button>
+        <button onclick="closeGridModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+          Close
+        </button>
+      </div>
     </div>
   </div>
 
@@ -854,6 +886,53 @@
     </div>
   </div>
 
+  <!-- ============================================== -->
+  <!-- MODAL 4: HARD RESET SYSTEM CONFIRMATION -->
+  <!-- ============================================== -->
+  <div id="resetModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-rose-500/40 rounded-3xl max-w-md w-full p-6 md:p-8 flex flex-col shadow-2xl shadow-rose-950/50 relative overflow-hidden">
+      
+      <!-- Top Icon & Title -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 text-2xl flex-shrink-0 shadow-inner">
+          ↺
+        </div>
+        <div>
+          <h3 class="font-bold text-lg md:text-xl text-slate-100 tracking-tight">Hard Reset System?</h3>
+          <p class="text-xs text-rose-300/80 font-medium mt-0.5">Start fresh from Question #1 with 0 score</p>
+        </div>
+      </div>
+
+      <!-- Explanation Box -->
+      <div class="bg-slate-950/70 rounded-2xl p-4 border border-slate-800 text-xs text-slate-300 space-y-2.5 mb-6">
+        <div class="flex items-start gap-2.5">
+          <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+          <span><strong>Zero Question Deletion:</strong> All <strong>174 questions</strong> (Lessons 10–13 and all Grammar categories) remain 100% available and intact. No questions are deleted.</span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="text-rose-400 font-bold mt-0.5">↺</span>
+          <span><strong>Score & Streak to Zero:</strong> All past question attempts, correct/incorrect highlights, and streaks are reset back to <strong>0</strong>.</span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="text-cyan-400 font-bold mt-0.5">🎴</span>
+          <span><strong>Fresh Experience:</strong> Both Flashcards and Drag & Drop blocks will be unlocked and completely clear for a clean re-practice.</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-end gap-3">
+        <button onclick="closeResetModal()" class="px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition active:scale-95">
+          Cancel
+        </button>
+        <button onclick="performHardReset()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white text-xs font-bold transition shadow-lg shadow-rose-900/40 flex items-center gap-2 active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+          <span>Yes, Reset to Zero</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="max-w-6xl mx-auto px-4 py-3 text-center text-xs text-slate-500 border-t border-slate-800/60 w-full mt-4 flex flex-wrap items-center justify-between gap-2">
     <div>
@@ -862,7 +941,11 @@
     <div class="flex items-center gap-3">
       <span>Built with Tailwind CSS & Groq Whisper V3</span>
       <span>&bull;</span>
-      <span class="text-cyan-400">174 Interactive Questions</span>
+      <span class="text-cyan-400 font-semibold">174 Interactive Questions</span>
+      <span>&bull;</span>
+      <button onclick="openResetModal()" class="text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 transition">
+        <span>↺ Hard Reset</span>
+      </button>
     </div>
   </footer>
 
@@ -3729,7 +3812,7 @@
       return localStorage.getItem('groq_api_key') || GROQ_SIGNATURE.split('').reverse().join('');
     }
     let currentCategory = 'all';
-    let currentMode = 'mcq'; // 'mcq' or 'drag-drop'
+    let currentMode = 'all'; // 'all', 'mcq', or 'drag-drop'
     let isStarredOnly = false;
     let isStudyMode = false;
     let activeQuestionList = [...ALL_QUESTIONS];
@@ -3912,7 +3995,7 @@
     function updateFilteredQuestionList() {
       activeQuestionList = ALL_QUESTIONS.filter(q => {
         const matchCat = (currentCategory === 'all' || q.categoryKey === currentCategory);
-        const matchMode = (q.type === currentMode);
+        const matchMode = (currentMode === 'all' || q.type === currentMode);
         const matchStarred = (!isStarredOnly || starredQuestions.has(q.id));
         return matchCat && matchMode && matchStarred;
       });
@@ -3951,22 +4034,16 @@
       currentMode = mode;
       isStarredOnly = false;
       
+      const allBtn = document.getElementById('modeAllBtn');
       const mcqBtn = document.getElementById('modeMcqBtn');
       const dragBtn = document.getElementById('modeDragBtn');
-      const mcqContainer = document.getElementById('flashcardModeContainer');
-      const dragContainer = document.getElementById('dragDropModeContainer');
 
-      if (mode === 'mcq') {
-        mcqBtn.className = "px-4 py-2 rounded-xl transition flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md";
-        dragBtn.className = "px-4 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200";
-        mcqContainer.classList.remove('hidden');
-        dragContainer.classList.add('hidden');
-      } else {
-        dragBtn.className = "px-4 py-2 rounded-xl transition flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md";
-        mcqBtn.className = "px-4 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200";
-        dragContainer.classList.remove('hidden');
-        mcqContainer.classList.add('hidden');
-      }
+      const activeStyle = "px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md font-bold";
+      const inactiveStyle = "px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200 font-semibold";
+
+      if (allBtn) allBtn.className = (mode === 'all') ? activeStyle : inactiveStyle;
+      if (mcqBtn) mcqBtn.className = (mode === 'mcq') ? activeStyle : inactiveStyle;
+      if (dragBtn) dragBtn.className = (mode === 'drag-drop') ? activeStyle : inactiveStyle;
 
       updateStarredButtons();
       activeIndex = 0;
@@ -4030,11 +4107,19 @@
       if (activeQuestionList.length === 0) return;
       const q = activeQuestionList[activeIndex];
       isCardFlipped = false;
-      document.getElementById('flashcardInner').classList.remove('rotate-y-180');
+      const inner = document.getElementById('flashcardInner');
+      if (inner) inner.classList.remove('rotate-y-180');
+
+      const mcqContainer = document.getElementById('flashcardModeContainer');
+      const dragContainer = document.getElementById('dragDropModeContainer');
 
       if (q.type === 'mcq') {
+        if (mcqContainer) mcqContainer.classList.remove('hidden');
+        if (dragContainer) dragContainer.classList.add('hidden');
         renderMCQCard(q);
       } else {
+        if (dragContainer) dragContainer.classList.remove('hidden');
+        if (mcqContainer) mcqContainer.classList.add('hidden');
         renderDragCard(q);
       }
       updateStatsUI();
@@ -4047,12 +4132,14 @@
       
       const isStarred = starredQuestions.has(q.id);
       const starIcon = document.getElementById('starSvgIcon');
-      if (isStarred) {
-        starIcon.setAttribute('fill', '#f59e0b');
-        starIcon.setAttribute('stroke', '#f59e0b');
-      } else {
-        starIcon.setAttribute('fill', 'none');
-        starIcon.setAttribute('stroke', 'currentColor');
+      if (starIcon) {
+        if (isStarred) {
+          starIcon.setAttribute('fill', '#f59e0b');
+          starIcon.setAttribute('stroke', '#f59e0b');
+        } else {
+          starIcon.setAttribute('fill', 'none');
+          starIcon.setAttribute('stroke', 'currentColor');
+        }
       }
 
       const grid = document.getElementById('frontOptionsGrid');
@@ -4083,12 +4170,12 @@
 
         optBtn.innerHTML = `
           <div class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-mono font-bold transition ${badgeColor}">
-              ${letters[idx]}
+            <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-mono font-bold transition \${badgeColor}">
+              \${letters[idx]}
             </span>
-            <span>${optText}</span>
+            <span>\${optText}</span>
           </div>
-          <span class="text-xs text-slate-500 font-mono hidden sm:inline">[${idx + 1}]</span>
+          <span class="text-xs text-slate-500 font-mono hidden sm:inline">[\${idx + 1}]</span>
         `;
 
         if (statusClass) {
@@ -4102,10 +4189,23 @@
       document.getElementById('backExplanationText').textContent = q.explanation;
 
       const revealBtn = document.getElementById('frontRevealBtn');
-      if (pastAnswer !== undefined || isStudyMode) {
-        revealBtn.classList.remove('hidden');
-      } else {
-        revealBtn.classList.add('hidden');
+      if (revealBtn) {
+        if (pastAnswer !== undefined || isStudyMode) {
+          revealBtn.classList.remove('hidden');
+        } else {
+          revealBtn.classList.add('hidden');
+        }
+      }
+
+      const retryBtn = document.getElementById('mcqRetryBtn');
+      if (retryBtn) {
+        if (pastAnswer !== undefined) {
+          retryBtn.classList.remove('hidden');
+          retryBtn.classList.add('flex');
+        } else {
+          retryBtn.classList.add('hidden');
+          retryBtn.classList.remove('flex');
+        }
       }
     }
 
@@ -4145,6 +4245,11 @@
       }
 
       document.getElementById('frontRevealBtn').classList.remove('hidden');
+      const retryBtn = document.getElementById('mcqRetryBtn');
+      if (retryBtn) {
+        retryBtn.classList.remove('hidden');
+        retryBtn.classList.add('flex');
+      }
       updateStatsUI();
     }
 
@@ -4304,8 +4409,66 @@
     }
 
     function resetDragCurrent() {
-      renderDragCard(activeQuestionList[activeIndex]);
+      const q = activeQuestionList[activeIndex];
+      if (q) {
+        delete userProgress[q.id];
+        localStorage.setItem('wbbse_progress', JSON.stringify(userProgress));
+      }
+      currentDroppedWord = null;
+      renderDragCard(q);
       AudioEngine.dragPick();
+      updateStatsUI();
+      showToast("Blank cleared. Ready to try again!", 'info');
+    }
+
+    function retryCurrentQuestion() {
+      if (activeQuestionList.length === 0) return;
+      const q = activeQuestionList[activeIndex];
+      delete userProgress[q.id];
+      localStorage.setItem('wbbse_progress', JSON.stringify(userProgress));
+      isCardFlipped = false;
+      currentDroppedWord = null;
+      currentDraggedWord = null;
+      AudioEngine.dragPick();
+      renderCurrentQuestion();
+      showToast("Question #" + (activeIndex + 1) + " cleared. Ready to retry!", 'info');
+    }
+
+    function openResetModal() {
+      const modal = document.getElementById('resetModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('resetModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function performHardReset() {
+      closeResetModal();
+
+      // 1. Wipe all stored progress & streak
+      userProgress = {};
+      currentStreak = 0;
+      localStorage.removeItem('wbbse_progress');
+      localStorage.removeItem('wbbse_streak');
+
+      // 2. Reset indices & interactive states
+      activeIndex = 0;
+      isCardFlipped = false;
+      currentDroppedWord = null;
+      currentDraggedWord = null;
+
+      // 3. Audio & Visual confetti fanfare
+      AudioEngine.correctChime();
+      launchConfetti();
+
+      // 4. Re-filter & render Question 1 completely clean
+      updateFilteredQuestionList();
+
+      // 5. Success toast
+      showToast("🔄 Hard Reset Completed! All 174 questions reset to 0. Starting fresh!", 'success', 4000);
+      console.log("System Hard Reset executed: all 174 questions intact, scores & answers reset to 0.");
     }
 
     // -------------------------------------------------------------
@@ -4397,6 +4560,15 @@
 
       const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
       document.getElementById('accuracyBadge').textContent = accuracy + "%";
+
+      const allCountEl = document.getElementById('allModeCount');
+      if (allCountEl) allCountEl.textContent = ALL_QUESTIONS.length;
+      const mcqCountEl = document.getElementById('mcqModeCount');
+      if (mcqCountEl) mcqCountEl.textContent = ALL_QUESTIONS.filter(q => q.type === 'mcq').length;
+      const dragCountEl = document.getElementById('dragModeCount');
+      if (dragCountEl) dragCountEl.textContent = ALL_QUESTIONS.filter(q => q.type === 'drag-drop').length;
+      const starredCountEl = document.getElementById('starredCountBadge');
+      if (starredCountEl) starredCountEl.textContent = starredQuestions.size;
     }
 
     // -------------------------------------------------------------
@@ -4903,8 +5075,26 @@
         return;
       }
 
+      // 0. SYSTEM HARD RESET & RETRY
+      if (text.includes("hard reset") || text.includes("reset system") || text.includes("reset all") || text.includes("start from zero") || text.includes("reset progress") || text.includes("clear progress") || text.includes("start again")) {
+        performHardReset();
+        actionTaken = true;
+        actionLabel = "Hard Reset to 0";
+      } else if (text.includes("retry question") || text.includes("clear answer") || text.includes("clear question") || text.includes("try again") || text === "retry") {
+        const q = activeQuestionList[activeIndex];
+        if (q && q.type === 'mcq') {
+          retryCurrentQuestion();
+          actionTaken = true;
+          actionLabel = "Cleared Question for Retry";
+        } else {
+          resetDragCurrent();
+          actionTaken = true;
+          actionLabel = "Reset Blank";
+        }
+      }
+
       // 1. NAVIGATION
-      if (text.includes("next") || text.includes("forward") || text.includes("ahead") || text.includes("skip") || text.includes("continue")) {
+      else if (text.includes("next") || text.includes("forward") || text.includes("ahead") || text.includes("skip") || text.includes("continue")) {
         nextQuestion();
         actionTaken = true;
         actionLabel = "Next Question";
@@ -5219,6 +5409,13 @@
         toggleTheme();
       } else if (e.key.toLowerCase() === 'm') {
         toggleAudioMute();
+      } else if (e.key.toLowerCase() === 'r') {
+        openResetModal();
+      } else if (e.key === 'Escape') {
+        closeResetModal();
+        closeGridModal();
+        closeHandbookModal();
+        closeVoiceGuideModal();
       }
     });
 
